@@ -45,7 +45,7 @@ def run_train_loop(reward_func, show_gui, n_episodes, episode_steps, mem_capacit
             next_state, reward, *_ = env.step(action)
 
             memory.push(
-                torch.tensor(state, device=agent.device),
+                state,
                 action,
                 torch.tensor([next_state], device=agent.device),
                 torch.tensor([reward], device=agent.device)
@@ -60,7 +60,6 @@ def run_train_loop(reward_func, show_gui, n_episodes, episode_steps, mem_capacit
                 for n in range(n_batches):
                     memory_batch = memory.sample(batch_size)
                     loss = agent.optimize_model(memory_batch)
-                agent.update_randomness()
                 errors.append(loss.item())
 
             if step % target_step == 0:
@@ -68,5 +67,7 @@ def run_train_loop(reward_func, show_gui, n_episodes, episode_steps, mem_capacit
 
         torch.save(agent.policy.state_dict(), f'{run_name}/models/modelstatedict_' + str(run) + '.pth')
         torch.save(agent.policy, f'{run_name}/models/model_' + str(run) + '.pth')
+
+        agent.update_randomness()
 
         run_to_csv(env.metrics_to_df(), rewards, cumulative_rewards, run_name, run, 'train')

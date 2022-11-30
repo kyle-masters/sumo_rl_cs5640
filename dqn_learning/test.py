@@ -20,11 +20,8 @@ def run_test_loop(reward_func, show_gui, n_episodes, episode_steps, run_name):
                     reward_fn=reward_func)
 
     for run in tqdm(range(1, n_episodes + 1), position=0, leave=False, desc='    runs'):
-        agent = DQNAgent(env)
+        agent = DQNAgent(env, f'{run_name}/models/modelstatedict_' + str(run) + '.pth')
         agent.test_mode()
-        agent.policy.load_state_dict(torch.load(f'{run_name}/models/modelstatedict_' + str(run) + '.pth'))
-        agent.policy.to(agent.device)
-        agent.policy.eval()
 
         rewards = [0]
         cumulative_rewards = [0]
