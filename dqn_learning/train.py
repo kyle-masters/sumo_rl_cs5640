@@ -3,6 +3,8 @@ import sumo_rl
 import os
 from tqdm.auto import tqdm
 import torch
+import pandas as pd
+import pickle
 
 from agent import DQNAgent, ReplayMemory
 
@@ -71,3 +73,6 @@ def run_train_loop(reward_func, show_gui, n_episodes, episode_steps, mem_capacit
         agent.update_randomness()
 
         run_to_csv(env.metrics_to_df(), rewards, cumulative_rewards, run_name, run, 'train')
+
+    with open(f'loss_{run_name}.pkl', 'wb') as f:
+        pickle.dump(errors, f)

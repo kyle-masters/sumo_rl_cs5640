@@ -6,14 +6,14 @@ warnings.filterwarnings("ignore")
 
 # Hyper parameters
 n_episodes = 10
-train_steps = 20000
+train_steps = 9600  # 20000
 mem_capacity = 20000
-batch_size = 50
+batch_size = 20  # 50
 n_batches = 8
-batch_step = 500
-target_step = 2000
+batch_step = 200  # 500
+target_step = 800  # 2000
 
-test_steps = 5000
+test_steps = 400  # 4000
 
 
 def print_heading(to_print, level=1, indent=1):
@@ -38,6 +38,8 @@ def print_heading(to_print, level=1, indent=1):
 if __name__ == '__main__':
     reward_funcs = ['diff-waiting-time', 'average-speed', 'queue', 'pressure']
     run_names = ['wait', 'speed', 'queue', 'pressure']
+    # reward_funcs = ['average-speed']
+    # run_names = ['speed']
 
     start_time = time.time()
 
@@ -53,9 +55,9 @@ if __name__ == '__main__':
                              batch_step, target_step, run_names[i])
         print(f'  Loop time: {time.time() - sub_start:.2f} seconds, elapsed time: {time.time() - start_time:.2f} seconds\n')
 
-        print_heading('Beginning testing loop...', -1, 1)
-        sub_start = time.time()
-        test.run_test_loop(reward_func, False, n_episodes, test_steps, run_names[i])
-        print(f'  Loop time: {time.time() - sub_start:.2f} seconds, elapsed time: {time.time() - start_time:.2f} seconds\n')
+        # print_heading('Beginning testing loop...', -1, 1)
+        # sub_start = time.time()
+        # test.run_test_loop(reward_func, True, n_episodes, test_steps, run_names[i])
+        # print(f'  Loop time: {time.time() - sub_start:.2f} seconds, elapsed time: {time.time() - start_time:.2f} seconds\n')
 
     print(f'All experiments complete: total time {time.time() - start_time:.2f} seconds')

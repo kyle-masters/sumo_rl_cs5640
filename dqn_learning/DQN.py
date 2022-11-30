@@ -9,8 +9,7 @@ class DQN(nn.Module):
             nn.ReLU(),
             nn.Linear(256, 256),
             nn.ReLU(),
-            nn.Linear(256, act_space),
-            nn.Tanh()
+            nn.Linear(256, act_space)
         )
 
     def forward(self, x):

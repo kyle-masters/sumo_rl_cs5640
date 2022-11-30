@@ -27,19 +27,27 @@ class ReplayMemory(object):
 
 
 class DQNAgent(object):
-    def __init__(self, environment):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    def __init__(self, environment, model_path=None):
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-        self.policy = DQN(environment.observation_space.shape[0], environment.action_space.n).to(self.device)
-        self.target = DQN(environment.observation_space.shape[0], environment.action_space.n).to(self.device)
-        self.target.load_state_dict(self.policy.state_dict())
-        self.target.eval()
+        if model_path is None:
+            self.policy = DQN(environment.observation_space.shape[0], environment.action_space.n).to(self.device)
+            self.target = DQN(environment.observation_space.shape[0], environment.action_space.n).to(self.device)
+            self.target.load_state_dict(self.policy.state_dict())
+            # self.target.to(self.device)
+            self.target.eval()
+        else:
+            self.policy = DQN(environment.observation_space.shape[0], environment.action_space.n)
+            self.policy.load_state_dict(torch.load(model_path))
+            self.policy.to(self.device)
+            self.policy.eval()
 
         self.optimizer = torch.optim.Adam(self.policy.parameters(), lr=1e-4)
 
-        self.decay = 0.93
-        self.randomness = 1.0
-        self.min_randomness = 0.001
+        self.episode = 0
+        self.random_vals = [1.0, 1.0, .8, .6, .4, .2, .1, .02, .01, .001]
+
+        self.randomness = self.random_vals[self.episode]
 
         self.n_actions = environment.action_space.n
 
@@ -62,6 +70,7 @@ class DQNAgent(object):
         state_action_values = self.policy(state_batch).gather(1, action_batch)
 
         next_state_values = self.target(next_state_batch).max(1)[0].detach()
+
         expected_state_action_values = next_state_values + reward_batch
 
         loss = nn.functional.smooth_l1_loss(state_action_values, expected_state_action_values)
@@ -78,8 +87,8 @@ class DQNAgent(object):
         self.target.load_state_dict(self.policy.state_dict())
 
     def update_randomness(self):
-        self.randomness *= self.decay
-        self.randomness = max(self.randomness, self.min_randomness)
+        self.episode += 1
+        self.randomness = self.random_vals[self.episode]
 
     def test_mode(self):
         self.randomness = 0.0
