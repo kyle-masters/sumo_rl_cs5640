@@ -13,10 +13,14 @@ Final video presentation link: [Final Presentation](https://youtu.be/hGR2TH-PPRQ
 
 ## Repository Contents
 
-- Python files used to generate models and plots (main.py)
-- Python file used to run gui-enabled simulation of specific generated model
-- Final presentation slides in PDF format
+- dqn_learning/ 
+  - python files used to generate models and plots (main.py)
+  - Python file used to run gui-enabled simulation of specific generated model
+- nets/ network files to run simulation
+- sumo_rl/ environment files (modified from original to include some additional metrics)
 - Final report PDF
+- Final presentation slides in PDF format
+
 
 ## Observation Space
 
@@ -52,5 +56,3 @@ After each iteration of training and testing an agent, that agent's policy NN an
 - Vehicles in intersection at each step
 - Average and total wait times at each step
 - Vehicles queued at each step
-
-Some of these metrics have been gathered by modifying the environment, so a copy of the required files from the environment is included in this repository.
