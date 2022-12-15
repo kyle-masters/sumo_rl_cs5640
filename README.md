@@ -9,6 +9,8 @@ This project utilizes a DQN with dense policy and target networks to find ideal 
 It utilizes the environment, default rewards, and files representing a 2-way intersection from SUMO-RL.  
 There are various rewards implemented from the environment in SUMO-RL, these are tested using different objective values.
 
+Final video presentation link: [Final Presentation](https://youtu.be/hGR2TH-PPRQ)
+
 ## Repository Contents
 
 - Python files used to generate models and plots (main.py)
