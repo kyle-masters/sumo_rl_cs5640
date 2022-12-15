@@ -1,6 +1,6 @@
 import torch.nn as nn
 
-# DQN Model
+# Dense Neural Network used in DQN agents
 class DQN(nn.Module):
     def __init__(self, obs_space, act_space):
         super(DQN, self).__init__()

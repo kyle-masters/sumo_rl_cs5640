@@ -5,9 +5,16 @@ This is a class project for USU CS 5640 (Reinforcement Learning Applications)
 - Simulation: [SUMO](https://github.com/eclipse/sumo)
 - Using a Deep Q Learning agent with [Pytorch](https://pytorch.org/docs/stable/index.html)
 
-This project utilizes a simple DQN with dense policy and target networks to find ideal traffic signal controls.  
+This project utilizes a DQN with dense policy and target networks to find ideal traffic signal controls.  
 It utilizes the environment, default rewards, and files representing a 2-way intersection from SUMO-RL.  
 There are various rewards implemented from the environment in SUMO-RL, these are tested using different objective values.
+
+## Repository Contents
+
+- Python files used to generate models and plots (main.py)
+- Python file used to run gui-enabled simulation of specific generated model
+- Final presentation slides in PDF format
+- Final report PDF
 
 ## Observation Space
 
@@ -43,3 +50,5 @@ After each iteration of training and testing an agent, that agent's policy NN an
 - Vehicles in intersection at each step
 - Average and total wait times at each step
 - Vehicles queued at each step
+
+Some of these metrics have been gathered by modifying the environment, so a copy of the required files from the environment is included in this repository.

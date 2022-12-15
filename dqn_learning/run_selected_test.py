@@ -8,10 +8,11 @@ import torch
 warnings.filterwarnings("ignore")
 
 reward_func = 'average-speed'
-run_name = 'speed'
-run = 10
-episode_steps = 2000
+run_name = 'wait'
+run = 5
+episode_steps = 200
 
+# Loads specific model and runs gui-enabled simulation
 if __name__ == '__main__':
     env = gym.make('sumo-rl-v0',
                     net_file='../nets/2way-single-intersection/single-intersection.net.xml',
@@ -37,4 +38,6 @@ if __name__ == '__main__':
 
         rewards.append(reward)
         cumulative_rewards.append(cumulative_rewards[-1] + reward)
+
+
 
